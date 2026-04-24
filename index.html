@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#c24e2a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Hindi">
+<title>Daily Hindi · हिन्दी</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23f5efe2' rx='38'/%3E%3Ctext x='90' y='128' text-anchor='middle' font-family='serif' font-size='110' fill='%23c24e2a'%3Eह%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23f5efe2'/%3E%3Ctext x='90' y='128' text-anchor='middle' font-family='serif' font-size='110' fill='%23c24e2a'%3Eह%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Shippori+Mincho:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5efe2;
+    --ink: #1a1612;
+    --accent: #c24e2a;
+    --muted: #8a7d6a;
+    --card: #fbf7ec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--bg); color: var(--ink); font-family: 'Shippori Mincho', 'Noto Serif JP', serif; min-height: 100vh; }
+  body {
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(194,78,42,0.04), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(26,22,18,0.05), transparent 40%);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  button { font-family: inherit; cursor: pointer; border: none; background: transparent; color: inherit; }
+  .hi-script { font-family: 'Tiro Devanagari Hindi', serif; letter-spacing: 0.01em; }
+
+  .container { max-width: 560px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; }
+  .brand-tag { font-size: 11px; letter-spacing: 0.25em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+  .brand-hi { font-size: 38px; line-height: 1; color: var(--ink); }
+  .streak { text-align: right; }
+  .streak-label { font-size: 11px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+  .streak-num { font-size: 28px; font-weight: 600; color: var(--accent); line-height: 1; }
+  .streak-unit { font-size: 14px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+
+  .progress { margin-bottom: 32px; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px; letter-spacing: 0.05em; }
+  .progress-bar { height: 3px; background: rgba(26,22,18,0.08); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); transition: width 0.4s; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 24px; justify-content: center; }
+  .tab { padding: 8px 16px; border-radius: 999px; font-size: 13px; letter-spacing: 0.05em; transition: all 0.2s; color: var(--muted); }
+  .tab.active { background: var(--ink); color: var(--bg); }
+
+  .card { background: var(--card); border: 1px solid rgba(26,22,18,0.08); border-radius: 20px; box-shadow: 0 1px 0 rgba(26,22,18,0.04), 0 20px 40px -20px rgba(26,22,18,0.12); }
+  .card-today { padding: 36px 28px 28px; text-align: center; margin-bottom: 20px; }
+  .chip { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; letter-spacing: 0.08em; background: rgba(194,78,42,0.1); color: var(--accent); border: 1px solid rgba(194,78,42,0.2); }
+  .big-hi { font-size: 44px; line-height: 1.4; margin: 24px 0 12px; color: var(--ink); }
+  .romaji { font-size: 16px; color: var(--muted); font-style: italic; margin-bottom: 4px; }
+  .kana { font-size: 15px; color: var(--ink); margin-bottom: 8px; letter-spacing: 0.05em; }
+  .divider { height: 1px; background: rgba(26,22,18,0.1); margin: 20px auto; width: 40px; }
+  .jp-text { font-size: 17px; color: var(--ink); font-weight: 500; }
+
+  .btn-primary { background: var(--ink); color: var(--bg); padding: 12px 20px; border-radius: 999px; font-size: 14px; letter-spacing: 0.04em; transition: transform 0.15s; }
+  .btn-primary:active { transform: scale(0.97); }
+  .btn-ghost { border: 1px solid rgba(26,22,18,0.2); padding: 10px 18px; border-radius: 999px; font-size: 13px; transition: all 0.15s; }
+  .btn-ghost:hover { background: rgba(26,22,18,0.05); }
+  .btn-listen { border: 1px solid rgba(26,22,18,0.15); width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s; margin: 8px auto 0; }
+  .btn-listen:hover, .btn-listen:active { background: var(--accent); color: white; border-color: var(--accent); }
+  .btn-listen:active { transform: scale(0.92); }
+
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  .list { overflow: hidden; }
+  .row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid rgba(26,22,18,0.06); cursor: pointer; transition: background 0.15s; }
+  .row:last-child { border-bottom: none; }
+  .row:hover { background: rgba(26,22,18,0.03); }
+  .row-text { flex: 1; min-width: 0; }
+  .row-hi { font-size: 20px; margin-bottom: 2px; }
+  .row-jp { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .check { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(26,22,18,0.25); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 13px; }
+  .check.done { background: var(--accent); border-color: var(--accent); color: white; }
+
+  .back-btn { margin-bottom: 20px; }
+
+  .footer { text-align: center; margin-top: 40px; }
+  .reset-btn { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const PHRASES = [
+  { id:1,  hi:"नमस्ते", romaji:"Namaste", kana:"ナマステ", jp:"こんにちは / ご挨拶全般", cat:"挨拶" },
+  { id:2,  hi:"धन्यवाद", romaji:"Dhanyavaad", kana:"ダンニャワード", jp:"ありがとう(丁寧)", cat:"挨拶" },
+  { id:3,  hi:"शुक्रिया", romaji:"Shukriya", kana:"シュクリヤー", jp:"ありがとう(カジュアル)", cat:"挨拶" },
+  { id:4,  hi:"अलविदा", romaji:"Alvida", kana:"アルヴィダー", jp:"さようなら", cat:"挨拶" },
+  { id:5,  hi:"फिर मिलेंगे", romaji:"Phir milenge", kana:"フィル ミレンゲー", jp:"また会いましょう", cat:"挨拶" },
+  { id:6,  hi:"मेरा नाम ... है", romaji:"Mera naam ... hai", kana:"メーラー ナーム ... ハェ", jp:"私の名前は...です", cat:"自己紹介" },
+  { id:7,  hi:"आप कैसे हैं?", romaji:"Aap kaise hain?", kana:"アープ カイセー ハェン?", jp:"お元気ですか?", cat:"自己紹介" },
+  { id:8,  hi:"मैं ठीक हूँ", romaji:"Main thik hoon", kana:"メン ティーク フーン", jp:"元気です", cat:"自己紹介" },
+  { id:9,  hi:"मैं जापान से हूँ", romaji:"Main Japan se hoon", kana:"メン ジャパーン セ フーン", jp:"日本から来ました", cat:"自己紹介" },
+  { id:10, hi:"मिलकर खुशी हुई", romaji:"Milkar khushi hui", kana:"ミルカル クシー フイー", jp:"お会いできて嬉しいです", cat:"自己紹介" },
+  { id:11, hi:"कृपया", romaji:"Kripya", kana:"クリパヤー", jp:"どうぞ / お願いします", cat:"丁寧" },
+  { id:12, hi:"माफ़ कीजिए", romaji:"Maaf kijiye", kana:"マーフ キージエ", jp:"すみません / ごめんなさい", cat:"丁寧" },
+  { id:13, hi:"कोई बात नहीं", romaji:"Koi baat nahin", kana:"コイー バート ナヒーン", jp:"問題ありません / 大丈夫", cat:"丁寧" },
+  { id:14, hi:"ज़रूर", romaji:"Zaroor", kana:"ザルール", jp:"もちろん", cat:"丁寧" },
+  { id:15, hi:"बिल्कुल", romaji:"Bilkul", kana:"ビルクル", jp:"その通り / 完全に", cat:"丁寧" },
+  { id:16, hi:"हाँ", romaji:"Haan", kana:"ハーン", jp:"はい", cat:"基本" },
+  { id:17, hi:"नहीं", romaji:"Nahin", kana:"ナヒーン", jp:"いいえ", cat:"基本" },
+  { id:18, hi:"ठीक है", romaji:"Thik hai", kana:"ティーク ハェ", jp:"了解 / OK", cat:"基本" },
+  { id:19, hi:"अच्छा", romaji:"Accha", kana:"アッチャー", jp:"良い / なるほど", cat:"基本" },
+  { id:20, hi:"बहुत अच्छा", romaji:"Bahut accha", kana:"バフット アッチャー", jp:"とても良い", cat:"基本" },
+  { id:21, hi:"यह मेरा कार्ड है", romaji:"Yeh mera card hai", kana:"イェ メーラー カード ハェ", jp:"これが私の名刺です", cat:"ビジネス" },
+  { id:22, hi:"क्या आप अंग्रेज़ी बोलते हैं?", romaji:"Kya aap angrezi bolte hain?", kana:"キャー アープ アングレーズィー ボールテー ハェン?", jp:"英語を話しますか?", cat:"ビジネス" },
+  { id:23, hi:"मुझे समझ नहीं आया", romaji:"Mujhe samajh nahin aaya", kana:"ムジェ サマジュ ナヒーン アーヤー", jp:"理解できませんでした", cat:"ビジネス" },
+  { id:24, hi:"कृपया धीरे बोलिए", romaji:"Kripya dhire boliye", kana:"クリパヤー ディーレ ボーリエ", jp:"ゆっくり話してください", cat:"ビジネス" },
+  { id:25, hi:"एक मिनट", romaji:"Ek minute", kana:"エーク ミニット", jp:"ちょっと待ってください", cat:"ビジネス" },
+  { id:26, hi:"एक", romaji:"Ek", kana:"エーク", jp:"1", cat:"数字" },
+  { id:27, hi:"दो", romaji:"Do", kana:"ドー", jp:"2", cat:"数字" },
+  { id:28, hi:"तीन", romaji:"Teen", kana:"ティーン", jp:"3", cat:"数字" },
+  { id:29, hi:"कितना?", romaji:"Kitna?", kana:"キトナー?", jp:"いくら? / いくつ?", cat:"数字" },
+  { id:30, hi:"बहुत", romaji:"Bahut", kana:"バフット", jp:"たくさん / とても", cat:"数字" },
+];
+
+const state = {
+  learned: new Set(),
+  streak: 0,
+  lastVisit: "",
+  view: "today",
+  detailId: null,
+  showJp: false,
+  todayPhrase: PHRASES[0],
+};
+
+const todayKey = () => new Date().toISOString().slice(0,10);
+const dayNumber = () => Math.floor(Date.now() / 86400000);
+
+function pickToday(learnedSet) {
+  const unlearned = PHRASES.filter(p => !learnedSet.has(p.id));
+  const pool = unlearned.length > 0 ? unlearned : PHRASES;
+  return pool[dayNumber() % pool.length];
+}
+
+function load() {
+  try {
+    const l = localStorage.getItem("hd_learned");
+    if (l) state.learned = new Set(JSON.parse(l));
+  } catch {}
+  state.streak = parseInt(localStorage.getItem("hd_streak") || "0");
+  state.lastVisit = localStorage.getItem("hd_lastVisit") || "";
+
+  const today = todayKey();
+  if (state.lastVisit !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+    state.streak = state.lastVisit === yesterday ? state.streak + 1 : 1;
+    localStorage.setItem("hd_lastVisit", today);
+    localStorage.setItem("hd_streak", String(state.streak));
+    state.lastVisit = today;
+  }
+  state.todayPhrase = pickToday(state.learned);
+}
+
+function saveLearned() {
+  localStorage.setItem("hd_learned", JSON.stringify([...state.learned]));
+}
+
+function speak(text) {
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "hi-IN";
+    u.rate = 0.75;
+    const voices = window.speechSynthesis.getVoices();
+    const hi = voices.find(v => v.lang === "hi-IN") || voices.find(v => v.lang && v.lang.startsWith("hi"));
+    if (hi) u.voice = hi;
+    window.speechSynthesis.speak(u);
+  } catch {}
+}
+
+function toggleLearned(id) {
+  if (state.learned.has(id)) state.learned.delete(id);
+  else state.learned.add(id);
+  saveLearned();
+  if (id === state.todayPhrase.id && state.learned.has(id)) {
+    setTimeout(() => {
+      state.todayPhrase = pickToday(state.learned);
+      state.showJp = false;
+      render();
+    }, 400);
+  }
+  render();
+}
+
+function setView(v) { state.view = v; if (v === "today") state.showJp = false; render(); }
+function showDetail(id) { state.detailId = id; state.view = "detail"; render(); }
+function nextPhrase() { state.todayPhrase = pickToday(state.learned); state.showJp = false; render(); }
+function revealJp() { state.showJp = true; render(); }
+function resetAll() {
+  if (!confirm("すべての学習記録をリセットしますか?")) return;
+  localStorage.removeItem("hd_learned");
+  localStorage.removeItem("hd_streak");
+  state.learned = new Set();
+  state.streak = 0;
+  state.todayPhrase = pickToday(new Set());
+  render();
+}
+
+const speakerSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+
+function esc(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function enc(s) { return encodeURIComponent(s); }
+
+function renderToday() {
+  const p = state.todayPhrase;
+  return `
+    <div class="card card-today">
+      <span class="chip">${esc(p.cat)}</span>
+      <div class="hi-script big-hi">${esc(p.hi)}</div>
+      <div class="romaji">${esc(p.romaji)}</div>
+      <div class="kana">${esc(p.kana)}</div>
+      <button class="btn-listen" onclick="speak(decodeURIComponent('${enc(p.hi)}'))" aria-label="発音を聞く">${speakerSvg}</button>
+      <div class="divider"></div>
+      ${state.showJp
+        ? `<div class="jp-text">${esc(p.jp)}</div>`
+        : `<button class="btn-ghost" onclick="revealJp()">意味を見る</button>`}
+    </div>
+    <div class="actions">
+      <button class="btn-primary" onclick="toggleLearned(${p.id})">${state.learned.has(p.id) ? "✓ 覚えた" : "覚えた"}</button>
+      <button class="btn-ghost" onclick="nextPhrase()">次のフレーズ →</button>
+    </div>
+  `;
+}
+
+function renderList() {
+  return `<div class="card list">` + PHRASES.map(p => `
+    <div class="row" onclick="showDetail(${p.id})">
+      <div class="row-text">
+        <div class="hi-script row-hi">${esc(p.hi)}</div>
+        <div class="row-jp">${esc(p.jp)}</div>
+      </div>
+      <div class="check ${state.learned.has(p.id) ? 'done' : ''}" onclick="event.stopPropagation(); toggleLearned(${p.id})">
+        ${state.learned.has(p.id) ? '<span>✓</span>' : ''}
+      </div>
+    </div>
+  `).join("") + `</div>`;
+}
+
+function renderDetail() {
+  const p = PHRASES.find(x => x.id === state.detailId);
+  if (!p) return "";
+  return `
+    <button class="btn-ghost back-btn" onclick="setView('list')">← 一覧へ</button>
+    <div class="card card-today">
+      <span class="chip">${esc(p.cat)}</span>
+      <div class="hi-script big-hi">${esc(p.hi)}</div>
+      <div class="romaji">${esc(p.romaji)}</div>
+      <div class="kana">${esc(p.kana)}</div>
+      <button class="btn-listen" onclick="speak(decodeURIComponent('${enc(p.hi)}'))" aria-label="発音を聞く">${speakerSvg}</button>
+      <div class="divider"></div>
+      <div class="jp-text">${esc(p.jp)}</div>
+      <button class="btn-primary" style="margin-top: 24px;" onclick="toggleLearned(${p.id})">${state.learned.has(p.id) ? "✓ 覚えた" : "覚えた"}</button>
+    </div>
+  `;
+}
+
+function render() {
+  const total = PHRASES.length;
+  const progress = state.learned.size;
+  const pct = Math.round((progress / total) * 100);
+
+  let content = "";
+  if (state.view === "today") content = renderToday();
+  else if (state.view === "list") content = renderList();
+  else if (state.view === "detail") content = renderDetail();
+
+  document.getElementById("app").innerHTML = `
+    <div class="container">
+      <header>
+        <div>
+          <div class="brand-tag">Daily Hindi</div>
+          <div class="hi-script brand-hi">हिन्दी</div>
+        </div>
+        <div class="streak">
+          <div class="streak-label">Streak</div>
+          <div class="streak-num">${state.streak}<span class="streak-unit">日</span></div>
+        </div>
+      </header>
+      <div class="progress">
+        <div class="progress-meta">
+          <span>習得 ${progress} / ${total}</span>
+          <span>${pct}%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: ${pct}%"></div></div>
+      </div>
+      <div class="tabs">
+        <button class="tab ${state.view==='today'?'active':''}" onclick="setView('today')">今日</button>
+        <button class="tab ${state.view==='list'?'active':''}" onclick="setView('list')">一覧</button>
+      </div>
+      ${content}
+      <div class="footer">
+        <button class="reset-btn" onclick="resetAll()">記録をリセット</button>
+      </div>
+    </div>
+  `;
+}
+
+// trigger voice list load (some browsers need this)
+if (window.speechSynthesis) {
+  window.speechSynthesis.onvoiceschanged = () => {};
+  window.speechSynthesis.getVoices();
+}
+
+load();
+render();
+</script>
+</body>
+</html>
